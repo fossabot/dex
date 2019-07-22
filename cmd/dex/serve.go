@@ -89,6 +89,8 @@ func serve(cmd *cobra.Command, args []string) error {
 		{c.GRPC.TLSCert == "" && c.GRPC.TLSClientCA != "", "cannot specify gRPC TLS client CA without a gRPC TLS cert"},
 	}
 
+	c.Issuer = os.ExpandEnv(c.Issuer)
+
 	for _, check := range checks {
 		if check.bad {
 			return fmt.Errorf("invalid config: %s", check.errMsg)
